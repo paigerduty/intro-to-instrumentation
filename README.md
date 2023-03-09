@@ -1,11 +1,8 @@
-# k8s-python-demo-app
-
-Application for educational purposes. As a final result application needs to be containerised, kubernetised and then
-have helm-charts written for it
+# Intro To Instrumentation
 
 ## Preparations
 
-### Set-up environment
+### Set-up Local 
 
 ```shell
 python3 -m venv .venv
