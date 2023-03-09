@@ -29,3 +29,18 @@ flask run
 curl localhost:5000
 Hello, World!
 ```
+###  Auto-Instrumentation
+
+```
+pip3  install opentelemetry-distro
+
+# auto-instruments
+opentelemetry-bootstrap -a install
+
+# prints spans to the console
+opentelemetry-instrument \
+    --traces_exporter console \
+    --metrics_exporter console \
+    flask run
+```    
+
