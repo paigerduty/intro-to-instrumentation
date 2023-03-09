@@ -44,3 +44,17 @@ opentelemetry-instrument \
     flask run
 ```    
 
+### Send to Jaeger
+
+```
+## add to app.py
+
+resource = Resource(attributes={
+    SERVICE_NAME: "APPY"
+})
+
+jaeger_exporter = JaegerExporter(
+    agent_host_name="localhost",
+    agent_port=16686,
+)
+```
