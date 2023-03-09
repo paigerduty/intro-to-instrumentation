@@ -44,6 +44,15 @@ opentelemetry-instrument \
     flask run
 ```    
 
+### Manually instrument do_roll
+```
+with tracer.start_as_current_span("do_roll") as rollspan:
+    result = random.randint(1,6)
+    rollspan.set_attribute("roll.value", result)
+    return result
+```    
+    
+
 ### Send to Jaeger
 
 ```
