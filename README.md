@@ -69,12 +69,13 @@ with tracer.start_as_current_span("do_roll") as rollspan:
 ```
 ## add to app.py
 
+# Service name is required for most backends
 resource = Resource(attributes={
-    SERVICE_NAME: "APPY"
+    SERVICE_NAME: "your-service-name"
 })
 
-jaeger_exporter = JaegerExporter(
-    agent_host_name="localhost",
-    agent_port=16686,
-)
+provider = TracerProvider(resource=resource)
+processor = BatchSpanProcessor(OTLPSpanExporter(endpoint="localhost:16686"))
+provider.add_span_processor(processor)
+trace.set_tracer_provider(provider)
 ```
