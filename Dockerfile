@@ -1,12 +1,15 @@
-FROM python:3.10-buster
-RUN groupadd --gid 1000 app && \
-    useradd --create-home --gid 1000 --uid 1000 app
-RUN mkdir -p /home/app/src
-WORKDIR /home/app/src
-COPY ./ /home/app/src
-RUN pip3 install --upgrade pip
-RUN pip3 install -r requirements.txt
-USER app
-ENTRYPOINT ["gunicorn"]
+FROM python:3.11-slim-buster
 
-CMD ["app:app"]
+WORKDIR /app
+
+COPY requirements.txt requirements.txt
+
+RUN pip3 install -r requirements.txt
+
+COPY app.py app.py
+
+EXPOSE 5000
+
+CMD [ "flask", "run", "--host=0.0.0.0"]
+
+

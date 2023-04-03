@@ -2,7 +2,7 @@
 .env
 .idea/
 .vscode/
- __pycache__/app.cpython-311.pyc
 pyvenv.cfg
 bin/
 lib/
+__pycache__/
