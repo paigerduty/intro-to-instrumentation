@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-otel
+  labels:
+    owner: paige
+spec:
+  containers:
+  - name: hello-otel
+    image: localhost/hello-otel:v1
+    command: ['flask', 'run', '--host=0.0.0.0']
+    ports:
+    - containerPort: 5000
+    hostPort: 5000
