@@ -1,88 +1,37 @@
 # Intro To Instrumentation
 
-### Install
+### Pre-Reqs
+* [Podman](https://podman.io/getting-started/installation) 
+* [Python3](https://www.python.org/downloads/) (if running locally) 
 
 
-### Set-up  
+### Set Up 
+[Clone repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 
 
+#### Podman
+1. Build image locally `podman build -t hello-otel:latest -f Dockerfile` 
+1. Run container `podman run -p 5000:5000 localhost/hello-otel:latest` 
+1. Confirm application is running. Open your browser and access http://localhost:5000 || `curl localhost:5000`
+1. Stop container `CTRL+C`
+1. Run Pod with application + Jaeger all-in-one containers `podman kube play app_pod.yaml`
+1. Open your browser and make multiple requests to http://localhost:5000 and http://localhost:5000/rolldice
+1. Open the Jaeger UI in your browser at http://localhost:16686/search and find your service `hello-otel` and traces
 
-### Test if it works
 
-```shell
-python3 -m venv .venv
-. .venv/bin/activate
+#### Local
+1. CD to dir and create Python virtual environment `python3 -m venv .venv &&. .venv/bin/activate`
+1. Install dependencies `pip install -r requirements.txt`
+1. Run the application `flask run`
+1. Confirm application is running. Open your browser and access http://localhost:5000 || `curl localhost:5000`
 
-python3 cli.py
-Hello world from CLI
+Run local Jaeger instance
 
-pip install -r requirements.txt
-flask run
-curl localhost:5000
-Hello, World!
 ```
-
-## Run local Jaeger instance
-
-```
-docker run -d --name jaeger \
+podman run -d --name jaeger \
   -e COLLECTOR_OTLP_ENABLED=true \
   -p 16686:16686 \
-  -p 4317:4317 \
   -p 4318:4318 \
   jaegertracing/all-in-one:1.42
 ```
-###  Auto-Instrumentation
 
-```
-pip3  install opentelemetry-distro
-
-# auto-instruments
-opentelemetry-bootstrap -a install
-
-# prints spans to the console
-opentelemetry-instrument \
-    --traces_exporter console \
-    flask run
-```    
-
-### Manually instrument do_roll
-```
-with tracer.start_as_current_span("do_roll") as rollspan:
-    result = random.randint(1,6)
-    rollspan.set_attribute("roll.value", result)
-    return result
-```    
-
-## Pre-Requisites
-
-* Podman 
-* 
-
-
-## Set Up 
-
-* Clone repository
-* Build containers `make build` 
-* Run containers `make run`
-* Check connection
-    `curl localhost:5000`
-    open browser to http://localhost:16686/search
-
----
-# Local 
-
-## Set up Locally
-* `make setup-local`
-* `make local` 
-    curl localhost:5000
-
-### Build image and run container
-
-* `podman build -t hello-otel:latest` 
-* `podman run -p 5000:5000 localhost/hello-otel:latest`
-
-### Check connection
-
-* `curl localhost:5000`
-* `curl localhost:5000/rolldice`
