@@ -8,8 +8,27 @@ metadata:
 spec:
   containers:
   - name: hello-otel
-    image: localhost/hello-otel:v1
+    image: localhost/hello-otel:latest
     command: ['flask', 'run', '--host=0.0.0.0']
     ports:
     - containerPort: 5000
-    hostPort: 5000
+      hostPort: 5000
+    env:
+    - name: OTEL_SERVICE_NAME
+      value: "hello-otel"
+    - name: OTEL_TRACES_EXPORTER
+      value: "otlp"
+    - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+      value: "http://localhost:4318/v1/traces"
+  - name: jaeger-all-in-one
+    image: jaegertracing/all-in-one:1.42
+    ports:
+    - containerPort: 16686
+      hostPort: 16686
+    - containerPort: 4318
+
+    env:
+    - name: COLLECTOR_OTLP_ENABLED
+      value: true
+    - name: OTEL_TRACES_EXPORTER
+      value: "otlp"

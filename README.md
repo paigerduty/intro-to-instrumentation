@@ -13,8 +13,13 @@
     `curl localhost:5000`
     open browser to http://localhost:16686/search
 
+---
+# Local 
 
-
+## Set up Locally
+* `make setup-local`
+* `make local` 
+    curl localhost:5000
 
 ### Build image and run container
 
@@ -26,3 +31,4 @@
 * `curl localhost:5000`
 * `curl localhost:5000/rolldice`
 
+--- 
