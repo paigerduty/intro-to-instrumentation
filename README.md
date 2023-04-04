@@ -69,8 +69,13 @@ with tracer.start_as_current_span("do_roll") as rollspan:
     `curl localhost:5000`
     open browser to http://localhost:16686/search
 
+---
+# Local 
 
-
+## Set up Locally
+* `make setup-local`
+* `make local` 
+    curl localhost:5000
 
 ### Build image and run container
 
