@@ -22,7 +22,7 @@ trace.set_tracer_provider(
 tracer = trace.get_tracer(__name__)
 
 trace.get_tracer_provider().add_span_processor(
-    BatchSpanProcessor(OTLPSpanExporter(endpoint="http://localhost:4318/v1/traces"))
+    BatchSpanProcessor(OTLPSpanExporter())
 )
 
 HITS = 0
