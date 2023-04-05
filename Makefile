@@ -21,7 +21,7 @@ build:
 	podman build -t hello-otel:latest -f Dockerfile
 
 run:
-	podman run -p 5000:5000 localhost/hello-otel:latest
+	podman run -p 5000:5000 -v $(shell pwd):/app/ -e FLASK_DEBUG=1 localhost/hello-otel:latest
 
 kube: 
 	podman kube play app_pod.yaml 
